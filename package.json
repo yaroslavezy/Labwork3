@@ -1,0 +1,99 @@
+{
+  "name": "brace-space-checker",
+  "displayName": "Brace Space Checker",
+  "description": "Проверка стиля кода: пробел между закрывающей скобкой ) и открывающей фигурной скобкой {",
+  "version": "1.0.0",
+  "publisher": "student",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Linters",
+    "Formatters",
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:c",
+    "onLanguage:cpp",
+    "onLanguage:java"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "braceSpace.fixAll",
+        "title": "Brace Space: исправить все нарушения в файле"
+      },
+      {
+        "command": "braceSpace.showReport",
+        "title": "Brace Space: показать отчёт по текущему файлу"
+      },
+      {
+        "command": "braceSpace.checkWorkspace",
+        "title": "Brace Space: проверить весь проект"
+      }
+    ],
+    "configuration": {
+      "title": "Brace Space Checker",
+      "properties": {
+        "braceSpace.mode": {
+          "type": "string",
+          "enum": [
+            "require",
+            "forbid"
+          ],
+          "enumDescriptions": [
+            "Между ) и { должен быть ровно один пробел",
+            "Между ) и { не должно быть пробелов"
+          ],
+          "default": "require",
+          "description": "Какое правило стиля проверять."
+        },
+        "braceSpace.languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "c",
+            "cpp",
+            "java"
+          ],
+          "description": "Идентификаторы языков, для которых работает проверка."
+        },
+        "braceSpace.checkOnType": {
+          "type": "boolean",
+          "default": true,
+          "description": "Проверять код во время набора (с задержкой). Если выключено — только при открытии и сохранении файла."
+        },
+        "braceSpace.maxFileSizeKb": {
+          "type": "number",
+          "default": 2048,
+          "minimum": 16,
+          "description": "Файлы больше этого размера (в КБ) не проверяются."
+        },
+        "braceSpace.workspaceGlob": {
+          "type": "string",
+          "default": "**/*.{c,cc,cpp,cxx,h,hh,hpp,hxx,java}",
+          "description": "Маска файлов для команды «проверить весь проект»."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node --test out/test/checker.test.js",
+    "docs": "typedoc --out docs/api src/extension.ts",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.80.0",
+    "@vscode/vsce": "^3.0.0",
+    "typedoc": "^0.26.0",
+    "typescript": "^5.4.0"
+  }
+}
