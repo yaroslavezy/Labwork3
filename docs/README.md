@@ -1,4 +1,4 @@
-# Документация Brace Space Checker
+# Документация Brace Space Checker (Надточий Ярослава м3119)
 
 ## 1. Назначение
 
